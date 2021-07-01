@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml</file>
+        <file>qml/common</file>
+        <file>qml/editorElements</file>
+        <file>qml/entities</file>
+        <file>qml/gameElements</file>
+        <file>qml/levels</file>
+        <file>qml/scenes</file>
+        <file>qml/scenes/dialogs</file>
+        <file>qml/scenes/sceneElements</file>
+        <file>qml/undo</file>
+
+        <file>qml/entities/Coin.qml</file>
+        <file>qml/entities/Finish.qml</file>
+        <file>qml/entities/Ground.qml</file>
+        <file>qml/entities/GroundDirt.qml</file>
+        <file>qml/entities/GroundGrass.qml</file>
+        <file>qml/entities/Mushroom.qml</file>
+        <file>qml/entities/Opponent.qml</file>
+        <file>qml/entities/OpponentJumper.qml</file>
+        <file>qml/entities/OpponentWalker.qml</file>
+        <file>qml/entities/Platform.qml</file>
+        <file>qml/entities/Player.qml</file>
+        <file>qml/entities/ResetSensor.qml</file>
+        <file>qml/entities/Spikeball.qml</file>
+        <file>qml/entities/Spikes.qml</file>
+        <file>qml/entities/Star.qml</file>
+    </qresource>
+</RCC>
+

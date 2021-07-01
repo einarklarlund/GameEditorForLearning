@@ -1,0 +1,10 @@
+support use of levels with items that are removed from the savedItemOverlay
+
+make a screen that prevents users from saving levels with duplicate names
+
+maybe fixed ---- 
+when a new item is saved into a custom item button, and the pen tool is used to place the item, the item's entityId returns the entity's superclass.
+For example, an entity like item_star_12 would be saved as item_12. you probably need to do some funky scoping shit to force the entity to be interpreted
+at a lower level. I'm p sure that it doesn't break any functionality tho.
+
+after loading a level w some customized blocks, erasing the block and redoing the block will cause the block to lose its custom configuration
