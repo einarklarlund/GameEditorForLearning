@@ -105,6 +105,8 @@ Item {
     width: 50
     height: 30
 
+    visible: false
+
     // place on top, centered
     anchors.horizontalCenter: editorOverlay.horizontalCenter
     anchors.top: editorOverlay.top

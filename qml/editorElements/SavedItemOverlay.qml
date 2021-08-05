@@ -233,6 +233,12 @@ Column {
         }
     }
 
+    function removeEmptyBaseItemFromButton(buttonIndex)
+    {
+      savedItemButtons[buttonIndex].removeEmptyBaseItem();
+      savedItemButtons[buttonIndex].initCreatedEntity();
+    }
+
 //    function reloadButton(buttonIndex) {
 //        savedItemButtons[buttonIndex].reloadButton();
 //    }

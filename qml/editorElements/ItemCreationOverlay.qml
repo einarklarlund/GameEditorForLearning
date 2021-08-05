@@ -7,7 +7,7 @@ import "../common"
 
 Column {
 
-    id: savedItemOverlay
+    id: itemCreationOverlay
 
     // the savedItemOverlay is tightly coupled with the sidebar, which has the resposibility of instantiating the overlay
     // and controlling the overlay's visibility
@@ -268,7 +268,8 @@ Column {
               storage.setValue("customItems", customItems);
 
               customItemManager.loadItems();
-//              customItemManager.addCustomizedEntity(itemUrl, custom);
+
+            //   savedItemOverlay.removeEmptyBaseItemFromButton(customItems.length - 1);
           }
           else {
               console.log("Tried to save an object, but the max number of saved objects has been reached.")

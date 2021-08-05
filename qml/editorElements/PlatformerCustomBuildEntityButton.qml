@@ -177,5 +177,11 @@ BuildEntityButton {
   /**
     * JS FUNCITONS
     */
+
+  function removeEmptyBaseItem()
+  {
+    createdEntity.preventFromRemovalFromEntityManager = false;
+    entityManager.removeEntityById(createdEntity.entityId);
+  }
 }
 
