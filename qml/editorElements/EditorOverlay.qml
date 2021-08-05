@@ -29,6 +29,8 @@ Item {
 
   property bool editingNewLevel: true
 
+  property string levelBeingEdited
+
   // this switches between true and false, if the user clicks the itemEditorButton
   property bool itemEditorVisible: false
 
@@ -152,17 +154,17 @@ Item {
         // there should be only level by the name levelName in the authorGenerated levels.
         // if there is more than one, the user is saving the current level with the same name as
         // a level that already exists
-//        let nameMatches = 0;
-//        for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-//            nameMatches += levelEditor.authorGeneratedLevels[i].levelName === levelEditor.currentLevelName ? 1 : 0;
-//            console.log("match");
-//            if((editingNewLevel && nameMatches > 0) || (!editingNewLevel && nameMatches > 1)) {
-//                renameLevelDialog.levelName = levelEditor.currentLevelName;
-//                renameLevelDialog.opacity = 1;
-//                console.log("cannot saved level " + levelEditor.currentLevelName + ". editingNewLevel is " + editingNewLevel);
-//                return;
-//            }
-//        }
+       let nameMatches = 0;
+       for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+           nameMatches += levelEditor.authorGeneratedLevels[i].levelName === levelEditor.currentLevelName ? 1 : 0;
+          //  console.log("found a name match. levelBeingEdited is " + levelBeingEdited + " and levelEditor.currentLevelName is " + levelEditor.currentLevelName);
+           if(((levelBeingEdited != levelEditor.currentLevelName) || levelBeingEdited == "newLevel") && nameMatches > 0) {
+               renameLevelDialog.levelName = levelEditor.currentLevelName;
+               renameLevelDialog.opacity = 1;
+              //  console.log("cannot saved level " + levelEditor.currentLevelName + ". editingNewLevel is " + editingNewLevel);
+               return;
+           }
+       }
 
         // save level
         saveLevel()

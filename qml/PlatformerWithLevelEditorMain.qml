@@ -134,6 +134,8 @@ GameWindow {
         }
       }
       levelEditor.createNewLevel(creationProperties)
+      
+      gameScene.editorOverlay.levelBeingEdited = "newLevel";
 
       // switch to gameScene, edit mode
       gameWindow.state = "game"
@@ -156,13 +158,14 @@ GameWindow {
     }
 
     onEditLevelPressed: {
-      gameScene.editorOverlay.editingNewLevel = true;
-      for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-          if(levelEditor.authorGeneratedLevels[i].levelName === levelData.levelName) {
-              gameScene.editorOverlay.editingNewLevel = false;
-              break;
-          }
-      }
+      // gameScene.editorOverlay.editingNewLevel = true;
+      gameScene.editorOverlay.levelBeingEdited = levelData.levelName;
+      // for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+      //     if(levelEditor.authorGeneratedLevels[i].levelName === levelData.levelName) {
+      //         gameScene.editorOverlay.editingNewLevel = false;
+      //         break;
+      //     }
+      // }
 
       // load level
       levelEditor.loadSingleLevel(levelData)

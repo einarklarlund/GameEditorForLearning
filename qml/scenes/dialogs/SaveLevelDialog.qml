@@ -29,6 +29,21 @@ DialogBase {
     anchors.bottomMargin: 150
 
     onClicked: {
+      // there should be only level by the name levelName in the authorGenerated levels.
+      // if there is more than one, the user is saving the current level with the same name as
+      // a level that already exists
+      let nameMatches = 0;
+      for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+          nameMatches += levelEditor.authorGeneratedLevels[i].levelName === levelEditor.currentLevelName ? 1 : 0;
+        //  console.log("found a name match. levelBeingEdited is " + levelBeingEdited + " and levelEditor.currentLevelName is " + levelEditor.currentLevelName);
+          if(((levelBeingEdited != levelEditor.currentLevelName) || levelBeingEdited == "newLevel") && nameMatches > 0) {
+              renameLevelDialog.levelName = levelEditor.currentLevelName;
+              renameLevelDialog.opacity = 1;
+            //  console.log("cannot saved level " + levelEditor.currentLevelName + ". editingNewLevel is " + editingNewLevel);
+              return;
+          }
+      }
+
       // when clicking "save and exit" the level gets saved, we
       // emit the gameScene's backPressed signal and close the dialog
       editorOverlay.saveLevel()
