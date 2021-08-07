@@ -63,7 +63,9 @@ SceneBase {
 
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: header.bottom
-    anchors.topMargin: 40
+    // anchors.topMargin: 40
+
+    visible: false
 
     color: "#cce6ff"
 

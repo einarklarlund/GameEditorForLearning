@@ -126,6 +126,7 @@ SceneBase {
         id: communityLevels
 
         screenText: "Community"
+        visible: false
 
         width: 80
 
@@ -212,6 +213,8 @@ SceneBase {
 
         screenText: "Created"
 
+        visible: false
+
         width: 80
 
         // this button is selected, if the subState is createdLevels
@@ -225,6 +228,8 @@ SceneBase {
         id: downloadedLevelsButton
 
         screenText: "Downloaded"
+
+        visible: false
 
         width: 80
 
