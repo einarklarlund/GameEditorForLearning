@@ -155,15 +155,47 @@ Item {
         // if there is more than one, the user is saving the current level with the same name as
         // a level that already exists
        let nameMatches = 0;
-       for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-           nameMatches += levelEditor.authorGeneratedLevels[i].levelName === levelEditor.currentLevelName ? 1 : 0;
-          //  console.log("found a name match. levelBeingEdited is " + levelBeingEdited + " and levelEditor.currentLevelName is " + levelEditor.currentLevelName);
-           if(((levelBeingEdited != levelEditor.currentLevelName) || levelBeingEdited == "newLevel") && nameMatches > 0) {
-               renameLevelDialog.levelName = levelEditor.currentLevelName;
-               renameLevelDialog.opacity = 1;
-              //  console.log("cannot saved level " + levelEditor.currentLevelName + ". editingNewLevel is " + editingNewLevel);
-               return;
-           }
+       
+       if(levelEditor.authorGeneratedLevels != undefined && levelEditor.authorGeneratedLevels != null)
+       {
+          for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+            //  console.log(JSON.stringify(levelEditor.authorGeneratedLevels[i]));
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            console.log("levelBeingEdited is " + levelBeingEdited + ". levelEditor.currentLevelName is " 
+              + levelEditor.currentLevelName + ". levelEditor.authorGeneratedLevels[i].levelName is "
+              + levelEditor.authorGeneratedLevels[i].levelName + " (levelBeingEdited != levelEditor.currentLevelName) is "
+              + (levelBeingEdited != levelEditor.currentLevelName) 
+              + ". (levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) is "
+              + (levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName))
+              
+              var editingNewLevel = false;
+              var reeditingOldLevel = false;
+
+              if(levelBeingEdited == "new level from new level button")
+              {
+                editingNewLevel = true;
+                reeditingOldLevel = false;
+              }
+              else
+              {
+                editingNewLevel = false;
+                reeditingOldLevel = levelBeingEdited != levelEditor.currentLevelName;
+              }
+
+
+              if((editingNewLevel || reeditingOldLevel) && 
+                    levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) {
+                  renameLevelDialog.levelName = levelEditor.currentLevelName;
+                  renameLevelDialog.opacity = 1;
+                  return;
+            }
+          }
+          
+          if(levelBeingEdited == "new level from new level button")
+          {
+            console.log("changing levelBeingEdited");
+            levelBeingEdited = levelEditor.currentLevelName;
+          }
        }
 
         // save level
@@ -291,7 +323,6 @@ Item {
 
   // saves the current level
   function saveLevel() {
-    customItemManager.saveCurrentLevel();
     EditorLogic.saveLevel();
   }
 

@@ -135,7 +135,7 @@ GameWindow {
       }
       levelEditor.createNewLevel(creationProperties)
       
-      gameScene.editorOverlay.levelBeingEdited = "newLevel";
+      gameScene.editorOverlay.levelBeingEdited = "new level from new level button";
 
       // switch to gameScene, edit mode
       gameWindow.state = "game"

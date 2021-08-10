@@ -107,8 +107,11 @@ Item {
         return false;
     }
 
-    function saveCurrentLevel() {
+    function saveCurrentLevel(saveProperties) {
         // save the modified list as the new value
+        console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        console.log(saveProperties.levelMetaData.levelId);
+        
         storage.setValue("customizedEntityDictionary_" + levelEditor.currentLevelName, customizedEntityDictionary);
         console.log("saved customizedEntityDictionary_ " + levelEditor.currentLevelName +
                     " with value: " + JSON.stringify(storage.getValue("customizedEntityDictionary_" + levelEditor.currentLevelName)));
