@@ -29,7 +29,7 @@ Item {
 
   property bool editingNewLevel: true
 
-  property string levelBeingEdited
+  property string nameOfOpenedLevel
 
   // this switches between true and false, if the user clicks the itemEditorButton
   property bool itemEditorVisible: false
@@ -156,47 +156,41 @@ Item {
         // a level that already exists
        let nameMatches = 0;
        
-       if(levelEditor.authorGeneratedLevels != undefined && levelEditor.authorGeneratedLevels != null)
-       {
-          for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-            //  console.log(JSON.stringify(levelEditor.authorGeneratedLevels[i]));
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            console.log("levelBeingEdited is " + levelBeingEdited + ". levelEditor.currentLevelName is " 
-              + levelEditor.currentLevelName + ". levelEditor.authorGeneratedLevels[i].levelName is "
-              + levelEditor.authorGeneratedLevels[i].levelName + " (levelBeingEdited != levelEditor.currentLevelName) is "
-              + (levelBeingEdited != levelEditor.currentLevelName) 
-              + ". (levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) is "
-              + (levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName))
-              
-              var editingNewLevel = false;
-              var reeditingOldLevel = false;
+//       if(levelEditor.authorGeneratedLevels != undefined && levelEditor.authorGeneratedLevels != null) {
+//          for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+//              var editingNewLevel = false;
+//              var openedLevelWasRenamed = false;
 
-              if(levelBeingEdited == "new level from new level button")
-              {
-                editingNewLevel = true;
-                reeditingOldLevel = false;
-              }
-              else
-              {
-                editingNewLevel = false;
-                reeditingOldLevel = levelBeingEdited != levelEditor.currentLevelName;
-              }
+//              if(nameOfOpenedLevel == "new level from new level button") {
+//                editingNewLevel = true;
+//                openedLevelWasRenamed = false;
+//              }
+//              else {
+//                editingNewLevel = false;
+//                openedLevelWasRenamed = nameOfOpenedLevel != levelEditor.currentLevelName;
+//              }
 
 
-              if((editingNewLevel || reeditingOldLevel) && 
-                    levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) {
-                  renameLevelDialog.levelName = levelEditor.currentLevelName;
-                  renameLevelDialog.opacity = 1;
-                  return;
-            }
+//              if((editingNewLevel || openedLevelWasRenamed) &&
+//                    levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) {
+//                  renameLevelDialog.levelName = levelEditor.currentLevelName;
+//                  renameLevelDialog.opacity = 1;
+//                  return;
+//            }
+//          }
+
+          // show renameLevelDialog and don't save if the current level name isn't unique
+          if(!isCurrentLevelNameUnique()) {
+            renameLevelDialog.levelName = levelEditor.currentLevelName;
+            renameLevelDialog.opacity = 1;
+            return;
           }
-          
-          if(levelBeingEdited == "new level from new level button")
-          {
-            console.log("changing levelBeingEdited");
-            levelBeingEdited = levelEditor.currentLevelName;
+
+          // set nameOfOpenedLevel to the current level name if the current level
+          // was opened from the
+          if(nameOfOpenedLevel == "new level from new level button") {
+            nameOfOpenedLevel = levelEditor.currentLevelName;
           }
-       }
 
         // save level
         saveLevel()
@@ -332,5 +326,47 @@ Item {
 
   function resetEditor() {
     EditorLogic.resetEditor();
+  }
+
+  // returns true if the currently opened level should be renamed.
+  // the currently opened level should be renamed if its levelName isn't unique.
+  function isCurrentLevelNameUnique() {
+      // if there are no authorGeneratedLevels, then the current level name must be unique
+      if(levelEditor.authorGeneratedLevels == undefined && levelEditor.authorGeneratedLevels == null)
+        return true;
+
+      var editingNewLevel = false;
+      var openedLevelWasRenamed = false;
+
+      // if nameOfOpenedLevel has been set to "new level from new level button",
+      // then the user has clicked the new level button and we're not re-editing
+      // an old level
+      if(nameOfOpenedLevel == "new level from new level button") {
+        editingNewLevel = true;
+        openedLevelWasRenamed = false;
+      }
+      else {
+        // otherwise, the user is not editing a new level
+        editingNewLevel = false;
+        // if the name of the opened level is different from the currentLevelName,
+        // then the opened level has been renamed while the levelEditor was opened
+        openedLevelWasRenamed = nameOfOpenedLevel != levelEditor.currentLevelName;
+      }
+
+      // if we're editing a new level or we're editing an old level that has been renamed,
+      // then we need to check if there are any other levels with the same name
+      if(editingNewLevel || openedLevelWasRenamed) {
+         for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
+             // if we find a level with the same name as the current level name,
+             // then the current level name is not unique
+             if(levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) {
+                 return false;
+             }
+         }
+      }
+
+      // return false if no other levels with the same name were found or if
+      // the user is overwriting a level that hasn't been renamed
+      return true;
   }
 }

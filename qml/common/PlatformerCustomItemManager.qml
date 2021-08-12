@@ -58,8 +58,8 @@ Item {
                     initBuildEntity(entity);
                 }
                 else {
-                    console.log("[PlatformerCustomItemManager] changing dictionary entry for " + key + " because it wasn't found in the level");
-                    customizedEntityDictionary[key] = undefined;
+                    console.log("[PlatformerCustomItemManager] dictionary entry for " + key + " was saved but wasn't found in the level ");
+                    // customizedEntityDictionary[key] = undefined;
                 }
             })
 

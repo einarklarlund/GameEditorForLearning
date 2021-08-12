@@ -134,8 +134,10 @@ GameWindow {
         }
       }
       levelEditor.createNewLevel(creationProperties)
-      
-      gameScene.editorOverlay.levelBeingEdited = "new level from new level button";
+
+      // the editorOverlay must know that a new level is being edited
+      // so that it knows when to bring up the renameLevelDialogue
+      gameScene.editorOverlay.nameOfOpenedLevel = "new level from new level button";
 
       // switch to gameScene, edit mode
       gameWindow.state = "game"
@@ -158,14 +160,9 @@ GameWindow {
     }
 
     onEditLevelPressed: {
-      // gameScene.editorOverlay.editingNewLevel = true;
-      gameScene.editorOverlay.levelBeingEdited = levelData.levelName;
-      // for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-      //     if(levelEditor.authorGeneratedLevels[i].levelName === levelData.levelName) {
-      //         gameScene.editorOverlay.editingNewLevel = false;
-      //         break;
-      //     }
-      // }
+      // the editorOverlay must know which level has been opened
+      // to bring up the renameLevelDialogue when appropriate
+      gameScene.editorOverlay.nameOfOpenedLevel = levelData.levelName;
 
       // load level
       levelEditor.loadSingleLevel(levelData)
