@@ -52,6 +52,38 @@ SceneBase {
       source: "../../assets/ui/header.png"
     }
   }
+  
+  // footer
+  Rectangle {
+    id: footer
+
+    height: footerImage.height + 8
+
+    anchors.bottom: menuScene.gameWindowAnchorItem.bottom
+    anchors.left: menuScene.gameWindowAnchorItem.left
+    anchors.right: menuScene.gameWindowAnchorItem.right
+    anchors.margins: 4
+
+    radius: 4
+
+    // background color
+    color: "#cce6ffFF"
+    
+
+    // footer image
+    MultiResolutionImage {
+      id: footerImage
+
+      fillMode: Image.PreserveAspectFit
+
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.margins: 4
+
+      source: "../../assets/ui/Funding logo.png"
+    }
+  }
 
   PlatformerImageButton {
     id: playButton
