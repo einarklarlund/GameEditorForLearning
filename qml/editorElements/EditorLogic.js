@@ -178,6 +178,13 @@ function saveLevel() {
   gameWindow.levelEditor.saveCurrentLevel(saveProperties);
   customItemManager.saveCurrentLevel(saveProperties);
   
+  // increase this dumb new level counter, idk why i care so much about this counter smh
+  var newLevelCounter = gameScene.storage.getValue("newLevelCounter")
+  if(newLevelCounter == undefined)
+    newLevelCounter = {"value": 0}
+    
+  newLevelCounter.value++
+  gameScene.storage.setValue("newLevelCounter", newLevelCounter)
 }
 
 function initEditor() {
