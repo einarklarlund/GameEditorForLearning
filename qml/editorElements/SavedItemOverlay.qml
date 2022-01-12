@@ -223,32 +223,6 @@ Column {
       * JS FUNCTIONS
       */
 
-    function getButtons() {
-        return savedItemButtons;
-    }
-
-    function logButtons() {
-        for(let buttonIndex = 0; customItemManager.isItemLoadedAt(buttonIndex); buttonIndex++) {
-            savedItemButtons[buttonIndex].logButton();
-        }
-    }
-
-    function removeEmptyBaseItemFromButton(buttonIndex)
-    {
-      savedItemButtons[buttonIndex].removeEmptyBaseItem();
-      savedItemButtons[buttonIndex].initCreatedEntity();
-    }
-
-//    function reloadButton(buttonIndex) {
-//        savedItemButtons[buttonIndex].reloadButton();
-//    }
-
-//    function reloadButtons() {
-//        for(let buttonIndex = 0; customItemManager.isItemLoadedAt(buttonIndex); buttonIndex++) {
-//            reloadButton(buttonIndex);
-//        }
-//    }
-
     function isButtonLoaded(buttonIndex) {
         return customItemManager.getCustomConfigurationAt(buttonIndex) !== null;
     }

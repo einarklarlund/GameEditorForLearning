@@ -155,42 +155,19 @@ Item {
         // if there is more than one, the user is saving the current level with the same name as
         // a level that already exists
        let nameMatches = 0;
-       
-//       if(levelEditor.authorGeneratedLevels != undefined && levelEditor.authorGeneratedLevels != null) {
-//          for(let i = 0; i < levelEditor.authorGeneratedLevels.length; ++i) {
-//              var editingNewLevel = false;
-//              var openedLevelWasRenamed = false;
 
-//              if(nameOfOpenedLevel == "new level from new level button") {
-//                editingNewLevel = true;
-//                openedLevelWasRenamed = false;
-//              }
-//              else {
-//                editingNewLevel = false;
-//                openedLevelWasRenamed = nameOfOpenedLevel != levelEditor.currentLevelName;
-//              }
+        // show renameLevelDialog and don't save if the current level name isn't unique
+        if(!isCurrentLevelNameUnique()) {
+          renameLevelDialog.levelName = levelEditor.currentLevelName;
+          renameLevelDialog.opacity = 1;
+          return;
+        }
 
-
-//              if((editingNewLevel || openedLevelWasRenamed) &&
-//                    levelEditor.authorGeneratedLevels[i].levelName == levelEditor.currentLevelName) {
-//                  renameLevelDialog.levelName = levelEditor.currentLevelName;
-//                  renameLevelDialog.opacity = 1;
-//                  return;
-//            }
-//          }
-
-          // show renameLevelDialog and don't save if the current level name isn't unique
-          if(!isCurrentLevelNameUnique()) {
-            renameLevelDialog.levelName = levelEditor.currentLevelName;
-            renameLevelDialog.opacity = 1;
-            return;
-          }
-
-          // set nameOfOpenedLevel to the current level name if the current level
-          // was opened from the
-          if(nameOfOpenedLevel == "new level from new level button") {
-            nameOfOpenedLevel = levelEditor.currentLevelName;
-          }
+        // set nameOfOpenedLevel to the current level name if the current level
+        // was opened from the
+        if(nameOfOpenedLevel == "new level from new level button") {
+          nameOfOpenedLevel = levelEditor.currentLevelName;
+        }
 
         // save level
         saveLevel()
