@@ -59,6 +59,7 @@ Item {
                 }
                 else {
                     console.log("[PlatformerCustomItemManager] dictionary entry for " + key + " was saved but wasn't found in the level ");
+                    customizedEntityDictionary[key] = undefined;
                 }
             })
 
