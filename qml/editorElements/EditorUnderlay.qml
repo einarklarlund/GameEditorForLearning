@@ -68,7 +68,7 @@ PinchArea {
       // (We add this dragDistance check, because we also want to place an entity
       // if the user clicks to place, but the mouse/finger moves a little bit
       // during the click)
-      if(editorOverlay.sidebar.activeTool === "draw" || (editorOverlay.sidebar.activeTool === "hand" && dragDistance < 4)) {
+      if(editorOverlay.sidebar.activeTool === "draw" || (editorOverlay.sidebar.activeTool === "draw" && dragDistance < 4)) {
         // ...place entity
         var entity = editorOverlay.placeEntityAtPosition(mouseX, mouseY)
 
