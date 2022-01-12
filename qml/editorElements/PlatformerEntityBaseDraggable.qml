@@ -15,10 +15,10 @@ EntityBaseDraggable {
   property point lastPosition
 
   // the entitybase needs a variable to track whether or not the entity is customized
-  // i had trouble with just setting the customConfiguration and checking if it is defined
-  property var isCustomized: false
+  // so that customConfiguration can be loaded appropriately.
+  property var isCustomized:
+      (customIndex != -1 || (gameScene.customItemManager != undefined && gameScene.customItemManager.isEntityRegistered(entityId)))
 
-  // DEPRECATED:
   // this variable is necessary so that the entitybase can check for custom configuration
   // while it is being draggged from the sidebar
   property var customIndex: -1
@@ -45,7 +45,6 @@ EntityBaseDraggable {
 
   width: sprite.width;
   height: sprite.height;
-//  colliderComponent: draggingCollider
 
   // when this component is loaded, set lastPosition to the
   // current position and set the size
@@ -53,6 +52,7 @@ EntityBaseDraggable {
       lastPosition = Qt.point(x, y);
       startWidth = 32;
       startHeight = 32;
+      console.log("EntityBaseDraggable.onCompleted fired, entityType is " + entityType + " and variation type is " + variationType)
   }
 
   // this is the grid size the entity gets snapped to when it's dragged and dropped
@@ -84,8 +84,8 @@ EntityBaseDraggable {
   // make the notAllowedRectangle fit to the sprite
   notAllowedRectangle.anchors.fill: sprite
 
-  // enable entity pooling to improve performance
-  poolingEnabled: true
+  // enable entity pooling only if the entity isn't customized
+  poolingEnabled: !isCustomized
 
   // since our levels have no size limit, we don't want any
   // boundaries when dragging our entities
@@ -97,6 +97,15 @@ EntityBaseDraggable {
   onEntityStateChanged: {
     if(entityState == "entityDragged") {
         audioManager.playSound("dragEntity")
+        console.log(poolingEnabled)
+        if(isCustomized) {
+            draggingCollider.active = true;
+            colliderComponent = draggingCollider;
+        }
+    }
+    else {
+        draggingCollider.active = false;
+        colliderComponent = collider;
     }
 
     if(isCustomized)
@@ -140,8 +149,16 @@ EntityBaseDraggable {
   // when this entity is taken from the entity pool, set it's lastPosition property
   onUsedFromPool: {
     lastPosition = Qt.point(x, y)
-    if(isCustomized)
+    console.log(entityId + " used from pool");
+    if(gameScene.customItemManager.isEntityRegistered(entityId)) {
+       isCustomized = true;
        loadCustomConfiguration();
+    }
+  }
+
+
+  onMovedToPool: {
+      console.log(entityId + " moved to pool");
   }
 
   // the sprite of the entity
@@ -150,24 +167,41 @@ EntityBaseDraggable {
     source:  "../../assets/EmptyPicture.png"
   }
 
+  // this collider is only used when customized entities are being dragged from
+  // the PlatformercustomBuildEntityButton into the game
+  BoxCollider {
+      id: draggingCollider
+      anchors.fill: sprite
+      active: false
+  }
+
   function loadCustomConfiguration() {
-      if(isCustomized){
-        if(gameScene.customItemManager.isEntityRegistered(entityId))
-          customConfiguration = gameScene.customItemManager.getCustomConfigurationById(entityId);
-        else{
-          console.log("[PlatformerEntityBaseDraggable] " + entityId + " is customized but isn't registered in the customItemManager.");
-        }
+    if(!isCustomized)
+        return
 
-        // set the custom configuration
-        if(customIndex == -1)
-          console.log("[PlatformerEntityBaseDraggable] " + entityId + " is customized but doesn't have its customIndex set.");
+    // this needs to be disabled so that the entityManager doesn't get customized and non-customized
+    // entities confused with one another when it chooses from the memory pool.
+    // it'd be better to give each unique variation of customized buildEntities their own single entity
+    // in the pool, but that's hard so fuck that (for now i guess) 
+    poolingEnabled = false;
 
-        customConfiguration = gameScene.customItemManager.getCustomConfigurationAt(customIndex);
-
-        sprite.width = customConfiguration.width;
-        sprite.height = customConfiguration.height;
-        sprite.source = customConfiguration.imageSource;
+    if(gameScene.customItemManager.isEntityRegistered(entityId))
+      customConfiguration = gameScene.customItemManager.getCustomConfigurationById(entityId);
+    else{
+      // set the custom configuration by customIndex if the customIndex has been set
+      if(customIndex == -1) {
+        console.log("[PlatformerEntityBaseDraggable] " + entityId + " is customized but it's unregistered " + 
+          "and doesn't have its customIndex set. The custom configuration cannot be loaded.");
+        return;
       }
+      
+      customConfiguration = gameScene.customItemManager.getCustomConfigurationAt(customIndex);
+    }
+
+    sprite.width = customConfiguration.width;
+    sprite.height = customConfiguration.height;
+    sprite.source = customConfiguration.imageSource;
+
   }
 
   // in this function we check if the entity is dragged out of bounds
@@ -213,19 +247,22 @@ EntityBaseDraggable {
 
   function resetSizeAndImage() {
       if(isCustomized) {
-          if(gameScene.customItemManager.isEntityRegistered(entityId))
-            customConfiguration = gameScene.customItemManager.getCustomConfigurationById(entityId);
-          else if (customIndex != -1)
-            customConfiguration = gameScene.customItemManager.getCustomConfigurationAt(customIndex);
-          else if (customConfiguration == undefined || customConfiguration == null){
-              console.log("[PlatformerEntityBaseDraggable] tried to reset size and image to custom configuration, but couldn't load the configuration.");
-              return;
-          }
-          else {
-              sprite.width = customConfiguration.width;
-              sprite.height = customConfiguration.height;
-              sprite.source = customConfiguration.imageSource;
-          }
+        if(gameScene.customItemManager.isEntityRegistered(entityId))
+          customConfiguration = gameScene.customItemManager.getCustomConfigurationById(entityId);
+        else if (customIndex != -1)
+          customConfiguration = gameScene.customItemManager.getCustomConfigurationAt(customIndex);
+        else if (customConfiguration == undefined || customConfiguration == null){
+          console.log("[PlatformerEntityBaseDraggable] tried to reset size and image to custom configuration, but couldn't load the configuration.");
+          return;
+        }
+        
+        sprite.width = customConfiguration.width;
+        sprite.height = customConfiguration.height;
+        sprite.source = customConfiguration.imageSource;
+      }
+      else {
+        sprite.width = 32;
+        sprite.height = 32;
       }
   }
 }
