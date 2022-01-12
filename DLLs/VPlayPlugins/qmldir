@@ -1,0 +1,6 @@
+module VPlayPlugins
+typeinfo vplayplugins.qmltypes
+
+# AppleSignIn:
+AppleSignIn 1.0 applesignin/AppleSignIn.qml
+AppleSignInButton 1.0 applesignin/AppleSignInButton.qml
