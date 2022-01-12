@@ -59,7 +59,6 @@ Item {
                 }
                 else {
                     console.log("[PlatformerCustomItemManager] dictionary entry for " + key + " was saved but wasn't found in the level ");
-                    // customizedEntityDictionary[key] = undefined;
                 }
             })
 
@@ -109,11 +108,10 @@ Item {
 
     function saveCurrentLevel(saveProperties) {
         // save the modified list as the new value
-        console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         console.log(saveProperties.levelMetaData.levelId);
         
         storage.setValue("customizedEntityDictionary_" + levelEditor.currentLevelName, customizedEntityDictionary);
-        console.log("saved customizedEntityDictionary_ " + levelEditor.currentLevelName +
+        console.log("saved customizedEntityDictionary_" + levelEditor.currentLevelName +
                     " with value: " + JSON.stringify(storage.getValue("customizedEntityDictionary_" + levelEditor.currentLevelName)));
     }
 
@@ -133,11 +131,6 @@ Item {
         var config = customizedEntityDictionary[buildEntity.entityId];
         buildEntity.customConfiguration = config;
         buildEntity.isCustomized = true;
-
-//        buildEntity.customIndex = customizedEntityDictionary[buildEntity.entityId].customIndex;
-        // buildEntity.image.source = config.imageSource;
-        // buildEntity.width = config.width;
-        // buildEntity.height = config.height;
 
         buildEntity.resetSizeAndImage();
     }
