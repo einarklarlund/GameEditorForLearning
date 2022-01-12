@@ -423,9 +423,6 @@ SceneBase {
     // initialize the editor
     editorOverlay.initEditor()
 
-    // tell customItemManager to load the custom configurations of the items in the level
-    customItemManager.initCustomizedEntityDictionary();
-
     // set background image
     // when there is a background saved, load it
     if(bgImage.loadedBackground && bgImage.loadedBackground != -1)
@@ -436,6 +433,9 @@ SceneBase {
     // reset the camera
     camera.zoom = 1
     camera.freePosition = Qt.point(0, 0)
+
+    // tell customItemManager to load the custom configurations of the items in the level
+    customItemManager.initCustomizedEntityDictionary();
 
     // initialize the player
     player.initialize()
