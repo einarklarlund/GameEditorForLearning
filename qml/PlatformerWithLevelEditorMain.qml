@@ -75,7 +75,7 @@ GameWindow {
     // so all entities, the entityManager creates are in this container
     entityContainer: gameScene.container
 
-    poolingEnabled: false
+    poolingEnabled: true
   }
 
   FelgoGameNetwork {
@@ -127,10 +127,16 @@ GameWindow {
     }
 
     onNewLevelPressed: {
+      var newLevelCounter = gameScene.storage.getValue("newLevelCounter")
+      var newLevelName = "newLevel"
+      
+      if(newLevelCounter != undefined)
+        newLevelName += newLevelCounter.value
+
       // create a new level
       var creationProperties = {
         levelMetaData: {
-          levelName: "newLevel"
+          levelName: newLevelName
         }
       }
       levelEditor.createNewLevel(creationProperties)
