@@ -104,6 +104,7 @@ EntityBaseDraggable {
     }
     else {
         draggingCollider.active = false;
+        // find some other way of checking if 'collider' is defined
         if(collider != undefined)
             colliderComponent = collider;
     }

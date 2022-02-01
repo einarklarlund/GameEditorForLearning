@@ -123,7 +123,7 @@ Item {
 
     function initBuildEntity(buildEntity) {
         console.log("[PlatformerCustomItemManager] initializing buildEntity " + buildEntity.entityId);
-        if(!customizedEntityDictionary[buildEntity.entityId]) {
+        if(customizedEntityDictionary[buildEntity.entityId] === undefined) {
             console.log("[PlatformerCustomItemManager] while initializing entity " + buildEntity.entityId +
                            " could not find the entity in customizedEntityDictionary");
             return;

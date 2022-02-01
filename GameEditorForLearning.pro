@@ -36,7 +36,6 @@ ios {
 
 DISTFILES += \
     assets/EmptyPicture.png \
-    qml/common/PlatformerCustomConfiguration.qml \
     qml/common/PlatformerCustomItemManager.qml \
     qml/editorElements/ItemCreationOverlay.qml \
     qml/editorElements/PlatformerCustomBuildEntityButton.qml \
