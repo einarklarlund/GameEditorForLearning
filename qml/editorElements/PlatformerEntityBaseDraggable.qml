@@ -99,13 +99,10 @@ EntityBaseDraggable {
         console.log(poolingEnabled)
         if(isCustomized) {
             draggingCollider.active = true;
-            colliderComponent = draggingCollider;
         }
     }
     else {
         draggingCollider.active = false;
-        if(collider != undefined)
-            colliderComponent = collider;
     }
 
     if(isCustomized)
