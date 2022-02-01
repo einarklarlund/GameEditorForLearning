@@ -318,7 +318,7 @@ Item {
   PlatformerImageButton {
     id: leaderboardButton
 
-    visible: leaderboardButtonVisible
+    visible: false
 
     width: 50
     height: 30
