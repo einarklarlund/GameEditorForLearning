@@ -62,7 +62,9 @@ SceneBase {
     anchors.bottom: menuScene.gameWindowAnchorItem.bottom
     anchors.left: menuScene.gameWindowAnchorItem.left
     anchors.right: menuScene.gameWindowAnchorItem.right
-    anchors.margins: 4
+    anchors.rightMargin: (menuScene.gameWindowAnchorItem.width - 661 * 3 / 8) / 2
+    anchors.leftMargin: (menuScene.gameWindowAnchorItem.width - 661 * 3 / 8) / 2
+    anchors.bottomMargin: 4
 
     radius: 4
 
@@ -74,12 +76,12 @@ SceneBase {
     MultiResolutionImage {
       id: footerImage
 
-      fillMode: Image.PreserveAspectFit
+      width: 661 * 5 / 16
+      height: 97 * 5 / 16
 
-      anchors.bottom: parent.bottom
-      anchors.left: parent.left
-      anchors.right: parent.right
-      anchors.margins: 4
+//      fillMode: Image.Pad
+
+      anchors.centerIn: parent
 
       source: "../../assets/ui/Funding logo.png"
     }
