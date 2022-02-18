@@ -5,8 +5,6 @@ import QtMultimedia 5.0
 Item {
   id: audioManager
 
-  Component.onCompleted: handleMusic()
-
   /**
    * Background Music ----------------------------------
    */
@@ -107,35 +105,7 @@ Item {
     id: removeEntity
     source: "../../assets/audio/sounds/tap_mellow.wav"
   }
-
-  // this function sets the music, depending on the current scene and the gameScene's state
-  function handleMusic() {
-    if(activeScene === gameScene) {
-      if(gameScene.state == "play" || gameScene.state == "test")
-        audioManager.startMusic(playMusic)
-      else if(gameScene.state == "edit")
-        audioManager.startMusic(editMusic)
-    }
-    else {
-      audioManager.startMusic(menuMusic)
-    }
-  }
-
-  // starts the given music
-  function startMusic(music) {
-    // if music is already playing, we don't have to do anything
-    if(music.playing)
-      return
-
-    // otherwise stop all music tracks
-    menuMusic.stop()
-    playMusic.stop()
-    editMusic.stop()
-
-    // play the music
-    music.play()
-  }
-
+  
   // play the sound effect with the given name
   function playSound(sound) {
     if(sound === "playerJump")

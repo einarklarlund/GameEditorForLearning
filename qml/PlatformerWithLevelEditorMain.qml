@@ -25,11 +25,6 @@ GameWindow {
   property alias levelEditor: levelEditor
   property alias itemEditor: gameScene.itemEditor
 
-  // update background music when scene changes
-  onActiveSceneChanged: {
-    audioManager.handleMusic()
-  }
-
   // level editor
   LevelEditor {
     id: levelEditor

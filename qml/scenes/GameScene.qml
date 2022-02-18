@@ -58,7 +58,6 @@ SceneBase {
   states: [
     State {
       name: "play"
-      StateChangeScript {script: audioManager.handleMusic()}
       StateChangeScript {script: customItemManager.loadItems()} // load the configurations for custom items
     },
     State {
@@ -70,14 +69,12 @@ SceneBase {
       PropertyChanges {target: editorOverlay; currentlyEditing: gameWindow.levelEditor.currentLevelName}
       StateChangeScript {script: resetLevel()} // reset all entity positions
       StateChangeScript {script: editorOverlay.grid.requestPaint()}
-      StateChangeScript {script: audioManager.handleMusic()}
       StateChangeScript {script: customItemManager.loadItems()} // load the configurations for custom items
     },
     State {
       name: "test"
       PropertyChanges {target: editorOverlay; visible: true} // show the editorOverlay
       StateChangeScript {script: audioManager.playSound("start")}
-      StateChangeScript {script: audioManager.handleMusic()}
       PropertyChanges {target: gameScene; time: 0}
       StateChangeScript {script: levelTimer.restart()}
       PropertyChanges {target: camera; zoom: 1}

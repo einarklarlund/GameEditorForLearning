@@ -139,6 +139,8 @@ SceneBase {
   MultiResolutionImage {
     id: musicButton
 
+    visible: false
+
     // show music icon
     source: "../../assets/ui/music.png"
     // reduce opacity, if music is disabled
